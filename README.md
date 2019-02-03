@@ -6,4 +6,4 @@ NodeJS app using a Firebase database on the clientside. As well as Session varia
 * Session variables with ExpressJs  
 * jQuery client dom manipulation  
 * Ajax calls  
-* Using different methods to obtain the same thing - Firebase vs. ExpressJs session variables.  
+* Using different methods to obtain the similar thing - Firebase vs. ExpressJs session variables.  
