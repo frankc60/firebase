@@ -1,5 +1,5 @@
 # Firebase & ExpressJs Session variables
-NodeJS app using a Firebase database on the clientside. As well as session variables in backend ExpressJs.
+NodeJS app using a Firebase database on the clientside. As well as Session variables on backend ExpressJs, for comparison.
 
 ## What I learnt
 * Using Firebase (https://firebase.google.com) in the client  
