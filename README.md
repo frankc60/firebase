@@ -6,5 +6,5 @@ NodeJS app using a Firebase database on the clientside. As well as Session varia
 * Session variables with ExpressJs.  
 * jQuery client DOM manipulation.  
 * Ajax calls.  
-* Working with Set() to store unique objects, in NodeJs.
+* Working with Set() to store unique objects.
 * Using different methods to obtain the similar thing - Firebase vs. ExpressJs session variables.  
