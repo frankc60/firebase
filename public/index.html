@@ -9,26 +9,23 @@
        <h2>form entry</h2>
 
 <form action="#">
-    First name:<br/>
+    Name:<br/>
     <input type="text" name="firstname" id="firstname" value="Mickey"/>
-    <br/>
-    Last name:<br>
-    <input type="text" name="lastname" value="Mouse"/>
     <br/><br/>
     <button id="submit" >Backend - Nodejs/Express Submit</button>
 
     <button id="submit2">Frontend - Firebase Submit</button>
 
 </form>
-
+<hr/>
 <div id="results">
-    results
+    <h3>NodeJs Results, stored in Set()</h3> call to the backend nodejs app. 
 </div>
-
+<hr />
 <div id="results2">
-    results2
+<h3>Firebase Results 2, stored in Firebase</h3> call to firebase.
 </div>
-
+<hr />
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -66,8 +63,8 @@ firebase.initializeApp(config);
                                 dataType: "html"
                             })
                             .done( (result) => {
-                                $("#results").append("<br/>returned from server: " + result);
-                                console.log(result)
+                                $("#results").append("<br/>returned from server: " + result + "<br/>-------------------------");
+                                console.log(JSON.parse(result))
                             })
                             .fail( (err) => {
                                 console.log("error: " + JSON.stringify(err));
@@ -95,9 +92,17 @@ firebase.initializeApp(config);
 
                             let firebaseReturn = $("#results2");
 
-                            let dbRef = firebase.database().ref().child("users/");
-                            dbRef.on("value",(data) => {firebaseReturn.append(data)});
+                            let dbRef = firebase.database().ref("users/").once("value", (snapshot) => {
+                                const data = snapshot.val();
+                                console.log(data)
+                                firebaseReturn.append("<b>returned from firebase, via client:</b> " + JSON.stringify(data) + "<br/><br/>")
+                            });
+                        //    dbRef.on("value",(data) => {firebaseReturn.append(data)});
                         
+/* DELETE
+let dbRef = firebase.database().ref("users/"+name).remove();
+ */
+
                         
                         });
 

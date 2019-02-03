@@ -5,6 +5,8 @@ const path = require("path");
 const app = express();
 const port = 3000;
 
+let mySet = new Set();
+ let obj = {};
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/scripts', express.static(path.join(__dirname, 'public/scripts')));
@@ -21,15 +23,29 @@ app.use(session({
 app.get("/code", (req, res, next) => {
 
     //ternary condition operator (shorthand if)
-    (req.session.page_views) ? req.session.page_views++ : req.session.page_views = 1;
-       
+    (req.session.page_views) ? req.session.page_views++: req.session.page_views = 1;
+
+   
     
-     res.send({
-         method: "backend",
-         visits: req.session.page_views,
-         passedData: req.query.name
-     });
-  //  res.send({ name: "firebase", calls: counter });    
+    let nm = req.query.name;
+    
+
+    obj[nm] = {
+        method: "backend",
+        passedData: req.query.name
+    };
+
+    mySet.add(obj);
+    console.log("-----------------")
+for (let item of mySet) console.log(item);
+console.log("-----------------")
+    console.log(mySet)
+    console.log("size: " + mySet.size);
+
+
+
+    res.send(obj);
+    //  res.send({ name: "firebase", calls: counter });    
 })
 
 app.get('/spice', (req, res) => res.send('Hello World!'))
