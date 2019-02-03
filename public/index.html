@@ -15,34 +15,50 @@
     Last name:<br>
     <input type="text" name="lastname" value="Mouse"/>
     <br/><br/>
-    <button id="submit" >Submit</button>
+    <button id="submit" >Backend - Nodejs/Express Submit</button>
+
+    <button id="submit2">Frontend - Firebase Submit</button>
+
 </form>
 
 <div id="results">
     results
 </div>
+
+<div id="results2">
+    results2
+</div>
+
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
 
             <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
             <script>
-                // Initialize Firebase
-                var config = {
-                        apiKey: "AIzaSyDxDZKEgZLkxdCKxIc7WIjnA5JX7_3Tk0A",
-                        authDomain: "coffeecup-146120.firebaseapp.com",
-                        databaseURL: "https://coffeecup-146120.firebaseio.com",
-                        projectId: "coffeecup-146120",
-                        storageBucket: "coffeecup-146120.appspot.com",
-                        messagingSenderId: "308895034117"
-                    };
-                    firebase.initializeApp(config);
+               
             
+                        let firebaseButtonClick = 0;
+
                     $( document ).ready(function() {
                         console.log( "doc ready!" );
+
+
+// Initialize Firebase
+var config = {
+apiKey: "AIzaSyDxDZKEgZLkxdCKxIc7WIjnA5JX7_3Tk0A",
+authDomain: "coffeecup-146120.firebaseapp.com",
+databaseURL: "https://coffeecup-146120.firebaseio.com",
+projectId: "coffeecup-146120",
+storageBucket: "coffeecup-146120.appspot.com",
+messagingSenderId: "308895034117"
+};
+firebase.initializeApp(config);
+// let firebaseDatabase = firebase.database();
                         
                         $("#submit").click(function(event){
                             event.preventDefault();
-                            console.log("submit clicked!")
+                            console.log("backend submit clicked!")
                             $.ajax({
                                 url: "/code", 
                                 type: "GET",
@@ -50,19 +66,45 @@
                                 dataType: "html"
                             })
                             .done( (result) => {
-                                $("#results").html("returned from server: " + result);
+                                $("#results").append("<br/>returned from server: " + result);
                                 console.log(result)
                             })
                             .fail( (err) => {
                                 console.log("error: " + JSON.stringify(err));
                             });
                         });
+                    
+                        $("#submit2").click(function(event){
+                            event.preventDefault();
+                            let fname = $("input#firstname").val();
+                            firebaseButtonClick++; 
+
+                            console.log("firebase submit clicked!");
+                            firebase.database().ref("users/" + fname).set({
+                                method: "firebase",
+                                firstname: fname,
+                                click: firebaseButtonClick
+                            }), function(err) {
+                                if(err) { 
+                                    console.log("ERROR: " + err)
+                                } else {
+                                    console.log("success")
+                                }
+                            }
+                        
+
+                            let firebaseReturn = $("#results2");
+
+                            let dbRef = firebase.database().ref().child("users/");
+                            dbRef.on("value",(data) => {firebaseReturn.append(data)});
+                        
+                        
+                        });
 
 
 
-                    });
-            
-            
+
+                    });     
             </script>
                 </body>
 

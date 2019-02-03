@@ -20,17 +20,15 @@ app.use(session({
 
 app.get("/code", (req, res, next) => {
 
-    if (req.session.page_views) {
-        req.session.page_views++;
-        res.send({ name: "firebase", visits: req.session.page_views, passedData: req.query.name });
-    } else {
-        req.session.page_views = 1;
-        res.send({
-            name: "firebase",
-            visits: req.session.page_views,
-            passedData: req.query.name
-        });
-    }
+    //ternary condition operator (shorthand if)
+    (req.session.page_views) ? req.session.page_views++ : req.session.page_views = 1;
+       
+    
+     res.send({
+         method: "backend",
+         visits: req.session.page_views,
+         passedData: req.query.name
+     });
   //  res.send({ name: "firebase", calls: counter });    
 })
 
